@@ -1,5 +1,5 @@
-#include <assert.h>
 #include "array_utils.h"
+#include <assert.h>
 
 int main(void)
 {
@@ -29,6 +29,6 @@ int main(void)
 
     // Tests passed
     printf("All tests passed.\n");
-    
+
     return 0;
 }

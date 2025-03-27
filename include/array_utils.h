@@ -5,8 +5,8 @@
 //   Includes
 // -----------------------------
 
-#include <stddef.h>
 #include <limits.h>
+#include <stddef.h>
 
 /**
  * @brief Return value used to indicate an invalid result.
@@ -16,10 +16,11 @@
 /**
  * @brief Status codes returned by array utility functions.
  */
-typedef enum {
-    ARRAY_OK = 0,           /**< Operation completed successfully */
-    ARRAY_ERROR_NULL,       /**< One or more NULL pointers passed */
-    ARRAY_ERROR_EMPTY       /**< The array size is zero */
+typedef enum
+{
+    ARRAY_OK = 0,     /**< Operation completed successfully */
+    ARRAY_ERROR_NULL, /**< One or more NULL pointers passed */
+    ARRAY_ERROR_EMPTY /**< The array size is zero */
 } ArrayStatus;
 
 /**
@@ -30,7 +31,7 @@ typedef enum {
  * @param out_min Pointer where the minimum value will be stored.
  * @return ArrayStatus Returns ARRAY_OK if successful, or an error code.
  */
-ArrayStatus array_find_min(const int *array, size_t size, int *out_min);
+ArrayStatus array_find_min(const int* array, size_t size, int* out_min);
 
 /**
  * @brief Finds the maximum value in an integer array.
@@ -40,6 +41,6 @@ ArrayStatus array_find_min(const int *array, size_t size, int *out_min);
  * @param out_max Pointer where the maximum value will be stored.
  * @return ArrayStatus Returns ARRAY_OK if successful, or an error code.
  */
-ArrayStatus array_find_max(const int *array, size_t size, int *out_max);
+ArrayStatus array_find_max(const int* array, size_t size, int* out_max);
 
 #endif // ARRAY_UTILS_H

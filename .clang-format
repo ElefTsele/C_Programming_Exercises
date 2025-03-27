@@ -1,0 +1,23 @@
+BasedOnStyle: LLVM
+IndentWidth: 4
+UseTab: Never
+TabWidth: 4
+ColumnLimit: 100
+
+# Brace and block formatting
+BreakBeforeBraces: Allman
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: Inline
+AlwaysBreakAfterReturnType: None
+
+# No weird alignment
+AlignConsecutiveAssignments: false
+AlignConsecutiveDeclarations: false
+
+# Pointer/reference alignment
+PointerAlignment: Left
+
+# Extra clarity
+SpaceBeforeParens: ControlStatements
+SpaceAfterCStyleCast: true
