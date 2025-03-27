@@ -1,0 +1,32 @@
+#VS code settings
+.vscode/
+
+# Compiled Binaries
+*.exe
+*.out
+*.o
+*.obj
+*.elf
+*.map
+
+# Build folders
+/bin/
+build/
+cmake-build-*/
+
+# Unity Test Output (log or temp files)
+*.log
+test_results/
+
+# CMake generated
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Backup/Swap files
+*~
+*.swp
+
+# Notes
+*.txt
