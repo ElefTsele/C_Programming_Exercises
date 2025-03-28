@@ -30,3 +30,6 @@ Makefile
 
 # Notes
 *.txt
+
+# Git internal
+FETCH_HEAD
