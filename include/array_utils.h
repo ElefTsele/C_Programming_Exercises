@@ -5,8 +5,10 @@
 //   Includes
 // -----------------------------
 
+#include "common_macros.h"
 #include <limits.h>
 #include <stddef.h>
+#include <stdio.h>
 
 /**
  * @brief Return value used to indicate an invalid result.

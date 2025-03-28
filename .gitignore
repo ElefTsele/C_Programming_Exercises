@@ -16,7 +16,6 @@ cmake-build-*/
 
 # Unity Test Output (log or temp files)
 *.log
-test_results/
 
 # CMake generated
 CMakeFiles/
