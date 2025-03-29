@@ -20,6 +20,10 @@ endif
 CC = gcc
 CFLAGS = -Iinclude -Wall -Wextra -std=c99
 
+# Ensure bin directory exists before compiling
+$(BIN_DIR):
+	@mkdir -p $(BIN_DIR)
+
 # Directories
 SRC_DIR = src
 INCLUDE_DIR = include
@@ -60,16 +64,16 @@ all:
 	@echo "Available targets: run_example, run_manual_test, run_unity_test, make clean"
 
 # Example
-$(EXAMPLE_BIN): $(EXAMPLE_FILE) $(SRC_FILES)
+$(EXAMPLE_BIN): $(EXAMPLE_FILE) $(SRC_FILES) | $(BIN_DIR)
 	@echo "Building example..."
 	@$(CC) $(CFLAGS) $^ -o $@
 
-run_example: $(EXAMPLE_BIN)
+run_example: $(EXAMPLE_BIN) | $(BIN_DIR)
 	@echo "Running example:"
 	@./$(EXAMPLE_BIN)
 
 # Manual test
-$(MANUAL_BIN): $(MANUAL_TEST_FILE) $(SRC_FILES)
+$(MANUAL_BIN): $(MANUAL_TEST_FILE) $(SRC_FILES) | $(BIN_DIR)
 	@echo "Building manual test..."
 	@$(CC) $(CFLAGS) $^ -o $@
 
@@ -78,7 +82,7 @@ run_manual_test: $(MANUAL_BIN)
 	@./$(MANUAL_BIN)
 
 # Unity test
-$(UNITY_BIN): $(UNITY_TEST_FILE) $(SRC_FILES) $(UNITY_SRC)
+$(UNITY_BIN): $(UNITY_TEST_FILE) $(SRC_FILES) $(UNITY_SRC) | $(BIN_DIR)
 	@echo "Building Unity test..."
 	@$(CC) $(CFLAGS) $^ -I$(UNITY_DIR) -o $@
 
