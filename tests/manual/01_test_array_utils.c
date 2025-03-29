@@ -1,5 +1,6 @@
 #include "array_utils.h"
 #include <assert.h>
+#include <stdio.h>
 
 int main(void)
 {

@@ -42,11 +42,12 @@ C_Programming_Exercises/
 ## Build & Run
 
 ```sh
-make 								 # Show available options
+make help							 # Show available options
 make EXERCISE=01 run_example         # Run the example with main()
 make EXERCISE=01 run_manual_test     # Run manual tests (without framework)
 make EXERCISE=01 run_unity_test      # Run Unity tests (unit testing)
 make clean                           # Clean build output (bin/)
+make LOG=1 ...  (enable debug logging))
 ```
 
 ---

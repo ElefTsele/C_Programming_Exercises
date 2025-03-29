@@ -1,13 +1,6 @@
 #include "array_utils.h"
+#include "log.h"
 #include <stdio.h>
-
-#define DEBUG_LOG_ENABLED
-
-#ifdef DEBUG_LOG_ENABLED
-#define LOG_ERROR(msg) printf("[ERROR] %s\n", msg)
-#else
-#define LOG_ERROR(msg)
-#endif
 
 /**
  * @brief Internal implementation of array_find_min.

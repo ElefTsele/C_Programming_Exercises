@@ -18,7 +18,16 @@ endif
 
 # Compiler and flags
 CC = gcc
-CFLAGS = -Iinclude -Wall -Wextra -std=c99
+CFLAGS = -Iinclude -Wall -Wextra -std=c99 
+# -------------------------------------------------------
+# -DDEBUG_LOG_ENABLED: Enable debug/test/error logging via log.h macros
+# -------------------------------------------------------
+# User chose to enable logging via make LOG=1
+# Print notice for visibility in terminal
+ifeq ($(LOG),1)
+    CFLAGS += -DDEBUG_LOG_ENABLED
+$(info Logging enabled: DEBUG_LOG_ENABLED defined)
+endif
 
 # Directories
 SRC_DIR = src
@@ -67,10 +76,15 @@ MANUAL_BIN = $(BIN_DIR)/$(EXERCISE)_$(EXERCISE_NAME)_manual
 UNITY_BIN = $(BIN_DIR)/$(EXERCISE)_$(EXERCISE_NAME)_unity
 
 # Targets
-.PHONY: all run_example run_manual_test run_unity_test clean
+.PHONY: help run_example run_manual_test run_unity_test clean
 
-all:
-	@echo "Available targets: run_example, run_manual_test, run_unity_test, make clean"
+help:
+	$(info Available targets:)
+	$(info make EXERCISE=01 run_example)
+	$(info make EXERCISE=01 run_manual_test)
+	$(info make EXERCISE=01 run_unity_test)
+	$(info make clean)
+	$(info make LOG=1 ...  (enable debug logging))
 
 # Example
 $(EXAMPLE_BIN): $(EXAMPLE_FILE) $(SRC_FILES) | bin
