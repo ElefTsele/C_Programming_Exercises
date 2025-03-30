@@ -1,3 +1,11 @@
+/*
+ * This is a temporary backup of the original array_utils.c file.
+ * The functionality has been migrated to array_utils.h using NASA-style inline functions.
+ * Kept here for reference during the transition.
+ */
+
+#if 0
+
 #include "array_utils.h"
 #include "log.h"
 #include <stdio.h>
@@ -57,3 +65,5 @@ ArrayStatus array_find_max(const int* array, size_t size, int* out_max)
     *out_max = max;
     return ARRAY_OK;
 }
+
+#endif
