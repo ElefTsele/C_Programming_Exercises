@@ -11,7 +11,7 @@ int main(void)
     int max = 0;
 
     // Find minimum value in the array
-    ArrayStatus status = array_find_min(my_array, array_size, &min);
+    ArrayStatus status = array_min(my_array, array_size, &min);
     if (status != ARRAY_OK)
     {
         printf("Failed to find minimum (error code: %d)\n", status);
@@ -22,7 +22,7 @@ int main(void)
     }
 
     // Find maximum value in the array
-    status = array_find_max(my_array, array_size, &max);
+    status = array_max(my_array, array_size, &max);
     if (status != ARRAY_OK)
     {
         printf("Failed to find maximum (error code: %d)\n", status);
