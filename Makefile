@@ -61,12 +61,19 @@ else
 $(error Unknown EXERCISE number '$(EXERCISE)'. Add mapping in Makefile)
 endif
 
-# File paths
+# Header-only modules that don't need a .c file
+HEADER_ONLY_EXERCISES := 01
+
+ifneq ($(filter $(EXERCISE),$(HEADER_ONLY_EXERCISES)),)
+SRC_FILES :=
+else
 SRC_FILES = $(SRC_DIR)/$(EXERCISE_NAME).c
+endif
+
+# File paths
 EXAMPLE_FILE = $(EXAMPLES_DIR)/$(EXERCISE)_$(EXERCISE_NAME)_example.c
 MANUAL_TEST_FILE = $(TESTS_MANUAL_DIR)/$(EXERCISE)_test_$(EXERCISE_NAME).c
 UNITY_TEST_FILE = $(TESTS_UNIT_DIR)/$(EXERCISE)_test_$(EXERCISE_NAME)_unity.c
-
 
 UNITY_SRC = $(UNITY_DIR)/unity.c
 
