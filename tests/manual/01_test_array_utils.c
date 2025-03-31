@@ -1,3 +1,5 @@
+// No manual test created for array_sum – Unity test provides full coverage.
+
 #include "array_utils.h"
 #include <assert.h>
 #include <stdio.h>

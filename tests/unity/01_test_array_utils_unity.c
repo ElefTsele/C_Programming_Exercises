@@ -7,6 +7,8 @@ void setUp(void) {}
 // Optional teardown function (after each test)
 void tearDown(void) {}
 
+// ----------- array_min/max tests -----------
+
 void test_array_min_should_return_min(void)
 {
     int array[] = {5, 2, 9, 3};
@@ -42,6 +44,46 @@ void test_array_max_should_return_error_on_empty_array(void)
     TEST_ASSERT_EQUAL(ARRAY_ERROR_EMPTY, status);
 }
 
+// ----------- array_sum tests -----------
+void test_array_sum_should_return_correct_sum(void)
+{
+    int array[] = {1, 2, 8, 9};
+    int result = 0;
+    ArrayStatus status = array_sum(array, 4, &result);
+    TEST_ASSERT_EQUAL(ARRAY_OK, status);
+    TEST_ASSERT_EQUAL(20, result);
+}
+
+void test_array_sum_should_return_error_on_null_input_pointer(void)
+{
+    int result = 0;
+    ArrayStatus status = array_sum(NULL, 4, &result);
+    TEST_ASSERT_EQUAL(ARRAY_ERROR_NULL, status);
+}
+void test_array_sum_should_return_error_on_null_output_pointer(void)
+{
+    int array[] = {1, 2, 8, 9};
+    ArrayStatus status = array_sum(array, 4, NULL);
+    TEST_ASSERT_EQUAL(ARRAY_ERROR_NULL, status);
+}
+
+void test_array_sum_should_return_error_on_empty_array(void)
+{
+    int array[] = {};
+    int result = 0;
+    ArrayStatus status = array_sum(array, 0, &result);
+    TEST_ASSERT_EQUAL(ARRAY_ERROR_EMPTY, status);
+}
+
+void test_array_sum_should_handle_negative_numbers(void)
+{
+    int array[] = {-2, 5, -3, 4}; // sum = 4
+    int result = 0;
+    ArrayStatus status = array_sum(array, 4, &result);
+    TEST_ASSERT_EQUAL(ARRAY_OK, status);
+    TEST_ASSERT_EQUAL(4, result);
+}
+
 int main(void)
 {
     UNITY_BEGIN();
@@ -50,6 +92,12 @@ int main(void)
     RUN_TEST(test_array_max_should_return_max);
     RUN_TEST(test_array_min_should_return_error_on_null_pointer);
     RUN_TEST(test_array_max_should_return_error_on_empty_array);
+
+    RUN_TEST(test_array_sum_should_return_correct_sum);
+    RUN_TEST(test_array_sum_should_return_error_on_null_input_pointer);
+    RUN_TEST(test_array_sum_should_return_error_on_null_output_pointer);
+    RUN_TEST(test_array_sum_should_return_error_on_empty_array);
+    RUN_TEST(test_array_sum_should_handle_negative_numbers);
 
     return UNITY_END();
 }

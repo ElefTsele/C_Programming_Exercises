@@ -41,7 +41,10 @@ typedef enum
  * @param array The input array (must not be NULL).
  * @param size The number of elements in the array.
  * @param out_min Pointer where the minimum value will be stored.
- * @return ArrayStatus Returns ARRAY_OK if successful, or an error code.
+ *
+ * @retval ARRAY_OK            Success
+ * @retval ARRAY_ERROR_NULL    Input or output pointer is NULL
+ * @retval ARRAY_ERROR_EMPTY   Array size is zero
  */
 static inline ArrayStatus array_min(const int* array, size_t size, int* out_min)
 {
@@ -50,7 +53,7 @@ static inline ArrayStatus array_min(const int* array, size_t size, int* out_min)
         return ARRAY_ERROR_NULL;
     }
 
-    if (size == 0)
+    if (size == 0U)
     {
         return ARRAY_ERROR_EMPTY;
     }
@@ -72,7 +75,10 @@ static inline ArrayStatus array_min(const int* array, size_t size, int* out_min)
  * @param array The input array (must not be NULL).
  * @param size The number of elements in the array.
  * @param out_max Pointer where the maximum value will be stored.
- * @return ArrayStatus Returns ARRAY_OK if successful, or an error code.
+ *
+ * @retval ARRAY_OK            Success
+ * @retval ARRAY_ERROR_NULL    Input or output pointer is NULL
+ * @retval ARRAY_ERROR_EMPTY   Array size is zero
  */
 static inline ArrayStatus array_max(const int* array, size_t size, int* out_max)
 {
@@ -81,7 +87,7 @@ static inline ArrayStatus array_max(const int* array, size_t size, int* out_max)
         return ARRAY_ERROR_NULL;
     }
 
-    if (size == 0)
+    if (size == 0U)
     {
         return ARRAY_ERROR_EMPTY;
     }
@@ -96,4 +102,38 @@ static inline ArrayStatus array_max(const int* array, size_t size, int* out_max)
     *out_max = max;
     return ARRAY_OK;
 }
+
+/**
+ * @brief Calculates the summation value of an integer array.
+
+ * @param array     The input array (must not be NULL).
+ * @param size      The number of elements in the array.
+ * @param out_sum   Pointer where the summation result will be stored.
+ *
+ * @retval ARRAY_OK            Success
+ * @retval ARRAY_ERROR_NULL    Input or output pointer is NULL
+ * @retval ARRAY_ERROR_EMPTY   Array size is zero
+ */
+static inline ArrayStatus array_sum(const int* array, size_t size, int* out_sum)
+{
+    if (array == NULL || out_sum == NULL)
+    {
+        return ARRAY_ERROR_NULL;
+    }
+
+    if (size == 0U)
+    {
+        return ARRAY_ERROR_EMPTY;
+    }
+
+    int sum = 0;
+    for (size_t i = 0U; i < size; ++i)
+    {
+        sum = sum + array[i];
+    }
+
+    *out_sum = sum;
+    return ARRAY_OK;
+}
+
 #endif // ARRAY_UTILS_H
