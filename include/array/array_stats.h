@@ -1,21 +1,11 @@
-#ifndef ARRAY_UTILS_H
-#define ARRAY_UTILS_H
+#ifndef ARRAY_STATS_H
+#define ARRAY_STATS_H
 
 // -----------------------------
 //   Includes
 // -----------------------------
 
-#include <limits.h>
 #include <stddef.h>
-
-// -----------------------------
-//   Defines
-// -----------------------------
-
-/**
- * @brief Return value used to indicate an invalid result.
- */
-#define ARRAY_UTILS_INVALID_RESULT INT_MAX
 
 // -----------------------------
 //   Type Definitions
@@ -42,9 +32,9 @@ typedef enum
  * @param size The number of elements in the array.
  * @param out_min Pointer where the minimum value will be stored.
  *
- * @retval ARRAY_STATUS_OK            Success
- * @retval ARRAY_STATUS_ERROR_NULL    Input or output pointer is NULL
- * @retval ARRAY_STATUS_ERROR_EMPTY   Array size is zero
+ * @retval ARRAY_STATUS_OK            Success.
+ * @retval ARRAY_STATUS_ERROR_NULL    Input or output pointer is NULL.
+ * @retval ARRAY_STATUS_ERROR_EMPTY   Array size is zero.
  */
 static inline array_status_t array_min(const int* array, size_t size, int* out_min)
 {
@@ -76,9 +66,9 @@ static inline array_status_t array_min(const int* array, size_t size, int* out_m
  * @param size The number of elements in the array.
  * @param out_max Pointer where the maximum value will be stored.
  *
- * @retval ARRAY_STATUS_OK            Success
- * @retval ARRAY_STATUS_ERROR_NULL    Input or output pointer is NULL
- * @retval ARRAY_STATUS_ERROR_EMPTY   Array size is zero
+ * @retval ARRAY_STATUS_OK            Success.
+ * @retval ARRAY_STATUS_ERROR_NULL    Input or output pointer is NULL.
+ * @retval ARRAY_STATUS_ERROR_EMPTY   Array size is zero.
  */
 static inline array_status_t array_max(const int* array, size_t size, int* out_max)
 {
@@ -105,14 +95,14 @@ static inline array_status_t array_max(const int* array, size_t size, int* out_m
 
 /**
  * @brief Calculates the summation value of an integer array.
-
+ *
  * @param array     The input array (must not be NULL).
  * @param size      The number of elements in the array.
  * @param out_sum   Pointer where the summation result will be stored.
  *
- * @retval ARRAY_STATUS_OK            Success
- * @retval ARRAY_STATUS_ERROR_NULL    Input or output pointer is NULL
- * @retval ARRAY_STATUS_ERROR_EMPTY   Array size is zero
+ * @retval ARRAY_STATUS_OK            Success.
+ * @retval ARRAY_STATUS_ERROR_NULL    Input or output pointer is NULL.
+ * @retval ARRAY_STATUS_ERROR_EMPTY   Array size is zero.
  */
 static inline array_status_t array_sum(const int* array, size_t size, int* out_sum)
 {
@@ -136,4 +126,39 @@ static inline array_status_t array_sum(const int* array, size_t size, int* out_s
     return ARRAY_STATUS_OK;
 }
 
-#endif // ARRAY_UTILS_H
+/**
+ * @brief Calculates the mean value of an integer array.
+ *
+ * @param array     The input array (must not be NULL).
+ * @param size      The number of elements in the array.
+ * @param out_mean  Pointer where the mean result will be stored.
+ *
+ * @retval ARRAY_STATUS_OK            Success.
+ * @retval ARRAY_STATUS_ERROR_NULL    Input or output pointer is NULL.
+ * @retval ARRAY_STATUS_ERROR_EMPTY   Array size is zero.
+ */
+static inline array_status_t array_mean(const int* array, size_t size, int* out_mean)
+{
+    if (array == NULL || out_mean == NULL)
+    {
+        return ARRAY_STATUS_ERROR_NULL;
+    }
+
+    if (size == 0U)
+    {
+        return ARRAY_STATUS_ERROR_EMPTY;
+    }
+
+    int sum = 0;
+    array_status_t status = array_sum(array, size, &sum);
+    if (status != ARRAY_STATUS_OK)
+    {
+        return status;
+    }
+
+    *out_mean = sum / (int) size;
+
+    return ARRAY_STATUS_OK;
+}
+
+#endif // ARRAY_STATS_H
