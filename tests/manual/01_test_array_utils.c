@@ -10,25 +10,25 @@ int main(void)
     int result;
 
     // Test min
-    ArrayStatus s = array_min(a, 5, &result);
-    assert(s == ARRAY_OK);
+    array_status_t s = array_min(a, 5, &result);
+    assert(s == ARRAY_STATUS_OK);
     assert(result == 1);
 
     // Test max
     s = array_max(a, 5, &result);
-    assert(s == ARRAY_OK);
+    assert(s == ARRAY_STATUS_OK);
     assert(result == 8);
 
     // Test error: size == 0
     s = array_min(a, 0, &result);
-    assert(s == ARRAY_ERROR_EMPTY);
+    assert(s == ARRAY_STATUS_ERROR_EMPTY);
 
     // Test error: NULL pointer
     s = array_max(NULL, 5, &result);
-    assert(s == ARRAY_ERROR_NULL);
+    assert(s == ARRAY_STATUS_ERROR_NULL);
 
     s = array_max(a, 5, NULL);
-    assert(s == ARRAY_ERROR_NULL);
+    assert(s == ARRAY_STATUS_ERROR_NULL);
 
     // Tests passed
     printf("All tests passed.\n");

@@ -26,10 +26,10 @@
  */
 typedef enum
 {
-    ARRAY_OK = 0,     /**< Operation completed successfully */
-    ARRAY_ERROR_NULL, /**< One or more NULL pointers passed */
-    ARRAY_ERROR_EMPTY /**< The array size is zero */
-} ArrayStatus;
+    ARRAY_STATUS_OK = 0,     /**< Operation completed successfully */
+    ARRAY_STATUS_ERROR_NULL, /**< One or more NULL pointers passed */
+    ARRAY_STATUS_ERROR_EMPTY /**< The array size is zero */
+} array_status_t;
 
 // -----------------------------
 //   Function Declarations (Inline Implementations)
@@ -42,20 +42,20 @@ typedef enum
  * @param size The number of elements in the array.
  * @param out_min Pointer where the minimum value will be stored.
  *
- * @retval ARRAY_OK            Success
- * @retval ARRAY_ERROR_NULL    Input or output pointer is NULL
- * @retval ARRAY_ERROR_EMPTY   Array size is zero
+ * @retval ARRAY_STATUS_OK            Success
+ * @retval ARRAY_STATUS_ERROR_NULL    Input or output pointer is NULL
+ * @retval ARRAY_STATUS_ERROR_EMPTY   Array size is zero
  */
-static inline ArrayStatus array_min(const int* array, size_t size, int* out_min)
+static inline array_status_t array_min(const int* array, size_t size, int* out_min)
 {
     if (array == NULL || out_min == NULL)
     {
-        return ARRAY_ERROR_NULL;
+        return ARRAY_STATUS_ERROR_NULL;
     }
 
     if (size == 0U)
     {
-        return ARRAY_ERROR_EMPTY;
+        return ARRAY_STATUS_ERROR_EMPTY;
     }
 
     int min = array[0];
@@ -66,7 +66,7 @@ static inline ArrayStatus array_min(const int* array, size_t size, int* out_min)
     }
 
     *out_min = min;
-    return ARRAY_OK;
+    return ARRAY_STATUS_OK;
 }
 
 /**
@@ -76,20 +76,20 @@ static inline ArrayStatus array_min(const int* array, size_t size, int* out_min)
  * @param size The number of elements in the array.
  * @param out_max Pointer where the maximum value will be stored.
  *
- * @retval ARRAY_OK            Success
- * @retval ARRAY_ERROR_NULL    Input or output pointer is NULL
- * @retval ARRAY_ERROR_EMPTY   Array size is zero
+ * @retval ARRAY_STATUS_OK            Success
+ * @retval ARRAY_STATUS_ERROR_NULL    Input or output pointer is NULL
+ * @retval ARRAY_STATUS_ERROR_EMPTY   Array size is zero
  */
-static inline ArrayStatus array_max(const int* array, size_t size, int* out_max)
+static inline array_status_t array_max(const int* array, size_t size, int* out_max)
 {
     if (array == NULL || out_max == NULL)
     {
-        return ARRAY_ERROR_NULL;
+        return ARRAY_STATUS_ERROR_NULL;
     }
 
     if (size == 0U)
     {
-        return ARRAY_ERROR_EMPTY;
+        return ARRAY_STATUS_ERROR_EMPTY;
     }
 
     int max = array[0];
@@ -100,7 +100,7 @@ static inline ArrayStatus array_max(const int* array, size_t size, int* out_max)
     }
 
     *out_max = max;
-    return ARRAY_OK;
+    return ARRAY_STATUS_OK;
 }
 
 /**
@@ -110,20 +110,20 @@ static inline ArrayStatus array_max(const int* array, size_t size, int* out_max)
  * @param size      The number of elements in the array.
  * @param out_sum   Pointer where the summation result will be stored.
  *
- * @retval ARRAY_OK            Success
- * @retval ARRAY_ERROR_NULL    Input or output pointer is NULL
- * @retval ARRAY_ERROR_EMPTY   Array size is zero
+ * @retval ARRAY_STATUS_OK            Success
+ * @retval ARRAY_STATUS_ERROR_NULL    Input or output pointer is NULL
+ * @retval ARRAY_STATUS_ERROR_EMPTY   Array size is zero
  */
-static inline ArrayStatus array_sum(const int* array, size_t size, int* out_sum)
+static inline array_status_t array_sum(const int* array, size_t size, int* out_sum)
 {
     if (array == NULL || out_sum == NULL)
     {
-        return ARRAY_ERROR_NULL;
+        return ARRAY_STATUS_ERROR_NULL;
     }
 
     if (size == 0U)
     {
-        return ARRAY_ERROR_EMPTY;
+        return ARRAY_STATUS_ERROR_EMPTY;
     }
 
     int sum = 0;
@@ -133,7 +133,7 @@ static inline ArrayStatus array_sum(const int* array, size_t size, int* out_sum)
     }
 
     *out_sum = sum;
-    return ARRAY_OK;
+    return ARRAY_STATUS_OK;
 }
 
 #endif // ARRAY_UTILS_H

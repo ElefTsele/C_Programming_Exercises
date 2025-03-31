@@ -13,9 +13,9 @@ void test_array_min_should_return_min(void)
 {
     int array[] = {5, 2, 9, 3};
     int result = 0;
-    ArrayStatus status = array_min(array, 4, &result);
+    array_status_t status = array_min(array, 4, &result);
 
-    TEST_ASSERT_EQUAL(ARRAY_OK, status);
+    TEST_ASSERT_EQUAL(ARRAY_STATUS_OK, status);
     TEST_ASSERT_EQUAL(2, result);
 }
 
@@ -23,25 +23,25 @@ void test_array_max_should_return_max(void)
 {
     int array[] = {1, 8, 4, 7};
     int result = 0;
-    ArrayStatus status = array_max(array, 4, &result);
+    array_status_t status = array_max(array, 4, &result);
 
-    TEST_ASSERT_EQUAL(ARRAY_OK, status);
+    TEST_ASSERT_EQUAL(ARRAY_STATUS_OK, status);
     TEST_ASSERT_EQUAL(8, result);
 }
 
 void test_array_min_should_return_error_on_null_pointer(void)
 {
     int result = 0;
-    ArrayStatus status = array_min(NULL, 4, &result);
-    TEST_ASSERT_EQUAL(ARRAY_ERROR_NULL, status);
+    array_status_t status = array_min(NULL, 4, &result);
+    TEST_ASSERT_EQUAL(ARRAY_STATUS_ERROR_NULL, status);
 }
 
 void test_array_max_should_return_error_on_empty_array(void)
 {
     int array[] = {};
     int result = 0;
-    ArrayStatus status = array_max(array, 0, &result);
-    TEST_ASSERT_EQUAL(ARRAY_ERROR_EMPTY, status);
+    array_status_t status = array_max(array, 0, &result);
+    TEST_ASSERT_EQUAL(ARRAY_STATUS_ERROR_EMPTY, status);
 }
 
 // ----------- array_sum tests -----------
@@ -49,38 +49,38 @@ void test_array_sum_should_return_correct_sum(void)
 {
     int array[] = {1, 2, 8, 9};
     int result = 0;
-    ArrayStatus status = array_sum(array, 4, &result);
-    TEST_ASSERT_EQUAL(ARRAY_OK, status);
+    array_status_t status = array_sum(array, 4, &result);
+    TEST_ASSERT_EQUAL(ARRAY_STATUS_OK, status);
     TEST_ASSERT_EQUAL(20, result);
 }
 
 void test_array_sum_should_return_error_on_null_input_pointer(void)
 {
     int result = 0;
-    ArrayStatus status = array_sum(NULL, 4, &result);
-    TEST_ASSERT_EQUAL(ARRAY_ERROR_NULL, status);
+    array_status_t status = array_sum(NULL, 4, &result);
+    TEST_ASSERT_EQUAL(ARRAY_STATUS_ERROR_NULL, status);
 }
 void test_array_sum_should_return_error_on_null_output_pointer(void)
 {
     int array[] = {1, 2, 8, 9};
-    ArrayStatus status = array_sum(array, 4, NULL);
-    TEST_ASSERT_EQUAL(ARRAY_ERROR_NULL, status);
+    array_status_t status = array_sum(array, 4, NULL);
+    TEST_ASSERT_EQUAL(ARRAY_STATUS_ERROR_NULL, status);
 }
 
 void test_array_sum_should_return_error_on_empty_array(void)
 {
     int array[] = {};
     int result = 0;
-    ArrayStatus status = array_sum(array, 0, &result);
-    TEST_ASSERT_EQUAL(ARRAY_ERROR_EMPTY, status);
+    array_status_t status = array_sum(array, 0, &result);
+    TEST_ASSERT_EQUAL(ARRAY_STATUS_ERROR_EMPTY, status);
 }
 
 void test_array_sum_should_handle_negative_numbers(void)
 {
     int array[] = {-2, 5, -3, 4}; // sum = 4
     int result = 0;
-    ArrayStatus status = array_sum(array, 4, &result);
-    TEST_ASSERT_EQUAL(ARRAY_OK, status);
+    array_status_t status = array_sum(array, 4, &result);
+    TEST_ASSERT_EQUAL(ARRAY_STATUS_OK, status);
     TEST_ASSERT_EQUAL(4, result);
 }
 

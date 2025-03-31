@@ -12,8 +12,8 @@ int main(void)
     int sum = 0;
 
     // Finds the minimum value in an integer array.
-    ArrayStatus status = array_min(my_array, array_size, &min);
-    if (status != ARRAY_OK)
+    array_status_t status = array_min(my_array, array_size, &min);
+    if (status != ARRAY_STATUS_OK)
     {
         printf("Failed to find minimum (error code: %d)\n", status);
     }
@@ -24,7 +24,7 @@ int main(void)
 
     // Finds the maximum value in an integer array.
     status = array_max(my_array, array_size, &max);
-    if (status != ARRAY_OK)
+    if (status != ARRAY_STATUS_OK)
     {
         printf("Failed to find maximum (error code: %d)\n", status);
     }
@@ -35,7 +35,7 @@ int main(void)
 
     // Calculates the summation value of an integer array.
     status = array_sum(my_array, array_size, &sum);
-    if (status != ARRAY_OK)
+    if (status != ARRAY_STATUS_OK)
     {
         printf("Failed to calculate the summation (error code: %d)\n", status);
     }
