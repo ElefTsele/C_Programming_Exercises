@@ -101,9 +101,9 @@ jobs:
       # ----------------------------------------------
       - name: Run manual test (if exists)
         run: |
-          echo "Searching for manual test with pattern '${{ matrix.exercise }}_*_manual.c'"
+          echo "Searching for manual test with pattern '${{ matrix.exercise }}_test_*.c'"
           find tests/manual -name "${{ matrix.exercise }}_test_*.c"
-          FILE=$(find tests/manual -name "${{ matrix.exercise }}_*_manual.c" | head -n 1)
+          FILE=$(find tests/manual -name "${{ matrix.exercise }}_test_*.c" | head -n 1)
           echo "Found file: $FILE"
           if [ -f "$FILE" ]; then
             echo "Running manual test for EXERCISE=${{ matrix.exercise }}"
@@ -111,7 +111,7 @@ jobs:
           else
             echo "No manual test file for EXERCISE=${{ matrix.exercise }} — Skipping."
           fi
-
+      
       # ----------------------------------------------
       # Build/Run Unity test (if exists)
       # ----------------------------------------------
