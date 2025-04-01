@@ -42,12 +42,13 @@ C_Programming_Exercises/
 ## Build & Run
 
 ```sh
-make help							 # Show available options
-make EXERCISE=01 run_example         # Run the example with main()
-make EXERCISE=01 run_manual_test     # Run manual tests (without framework)
-make EXERCISE=01 run_unity_test      # Run Unity tests (unit testing)
-make clean                           # Clean build output (bin/)
-make LOG=1 ...  (enable debug logging))
+make help                                # Show available options
+make EXERCISE=01 run_example             # Run the example with main()
+make EXERCISE=01 run_manual_test         # Run manual tests (without framework)
+make EXERCISE=01 run_unity_test          # Run Unity tests (with Unity framework)
+make clean                               # Clean build output (bin/)
+make LOG=1 EXERCISE=01 run_example       # Enable debug logging (if supported)
+make check_includes                      # Show all include paths used in the code
 ```
 
 ---
@@ -62,3 +63,30 @@ ifeq ($(EXERCISE),02)
 EXERCISE_NAME := new_module_name
 endif
 ```
+
+# Array Utilities
+
+This directory contains modular, header-only libraries for common array operations,
+designed for embedded systems and high-performance applications.
+
+## Modules
+
+- `array_stats.h` – Basic statistics: sum, mean, min, max
+- `array_transform.h` – Value transformations: clamp, scale, normalize
+- `array_sorted.h` – Optimized operations for sorted arrays (e.g. min/max in O(1))
+- `array_noise.h` – Filtering functions (median, average excluding extremes, etc.)
+
+---
+
+## Performance Note
+
+> **If your arrays are already sorted**, you should use `array_sorted.h`.
+
+The functions in `array_stats.h` and others are generic and scan the entire array.
+However, when the array is guaranteed to be sorted, significant optimizations can be made:
+- `array_min_sorted()` → returns `array[0]`
+- `array_max_sorted()` → returns `array[size - 1]`
+- `array_median_sorted()` → direct access to the middle element
+
+**These optimizations can reduce complexity from O(n) to O(1).**
+

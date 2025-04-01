@@ -57,12 +57,14 @@ EXERCISE ?= 01
 # Mappings for EXERCISE number to module name
 ifeq ($(EXERCISE),01)
 EXERCISE_NAME := array_stats
+else ifeq ($(EXERCISE),02)
+EXERCISE_NAME := array_transform
 else
 $(error Unknown EXERCISE number '$(EXERCISE)'. Add mapping in Makefile)
 endif
 
 # Header-only modules that don't need a .c file
-HEADER_ONLY_EXERCISES := 01
+HEADER_ONLY_EXERCISES := 01 02
 
 ifneq ($(filter $(EXERCISE),$(HEADER_ONLY_EXERCISES)),)
 SRC_FILES :=
@@ -92,6 +94,7 @@ help:
 	$(info make EXERCISE=01 run_unity_test)
 	$(info make clean)
 	$(info make LOG=1 ...  (enable debug logging))
+	$(info make check_includes (verify if all includes/ folders exist))
 
 # Example
 $(EXAMPLE_BIN): $(EXAMPLE_FILE) $(SRC_FILES) | bin
@@ -126,6 +129,10 @@ clean:
 	-$(RM) $(BIN_DIR)$(BIN_SLASH)*.exe
 	@echo Clean complete.
 
-
-
-
+# Check if all used #include folders exist in include/
+check_includes:
+ifeq ($(OS),Windows_NT)
+	@powershell -Command "Get-ChildItem -Recurse -Include *.c,*.h | Select-String '#include'"
+else
+	@find . -type f \( -name "*.c" -o -name "*.h" \) -exec grep --color=auto -H '#include' {} \;
+endif

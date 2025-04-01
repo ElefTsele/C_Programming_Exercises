@@ -31,3 +31,8 @@ cmake_install.cmake
 
 # Git internal
 FETCH_HEAD
+
+# Doxygen output folders – 
+# will be uploaded only on release
+/docs/html/
+/docs/latex/

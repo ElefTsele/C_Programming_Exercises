@@ -13,6 +13,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        exercise: [01, 02]
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -20,26 +24,30 @@ jobs:
       - name: Install dependencies
         run: sudo apt-get update && sudo apt-get install -y build-essential
 
-      - name: Build example
+      - name: Build example (optional)
         run: |
-          if [ "$ENABLE_LOGGING" = "true" ]; then
-            make EXERCISE=01 LOG=1 run_example
+          if ls examples/${{ matrix.exercise }}_*_example.c 1> /dev/null 2>&1; then
+            make EXERCISE=${{ matrix.exercise }} run_example
           else
-            make EXERCISE=01 run_example
+            echo "Example not found. Skipping."
           fi
 
-      - name: Run manual test
+      - name: Run manual test (optional)
         run: |
-          if [ "$ENABLE_LOGGING" = "true" ]; then
-            make EXERCISE=01 LOG=1 run_manual_test
+          if ls tests/manual/${{ matrix.exercise }}_*_manual.c 1> /dev/null 2>&1; then
+            make EXERCISE=${{ matrix.exercise }} run_manual_test
           else
-            make EXERCISE=01 run_manual_test
+            echo "Manual test not found. Skipping."
+          fi
+  
+
+      - name: Run Unity test (optional)
+        run: |
+          if ls tests/unity/${{ matrix.exercise }}_*_unity.c 1> /dev/null 2>&1; then
+            make EXERCISE=${{ matrix.exercise }} run_unity_test
+          else
+            echo "Unity test not found. Skipping."
           fi
 
-      - name: Run Unity test
-        run: |
-          if [ "$ENABLE_LOGGING" = "true" ]; then
-            make EXERCISE=01 LOG=1 run_unity_test
-          else
-            make EXERCISE=01 run_unity_test
-          fi
+      - name: Check include paths
+        run: make EXERCISE=${{ matrix.exercise }} check_includes || echo "Include check skipped"

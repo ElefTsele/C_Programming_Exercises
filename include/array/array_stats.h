@@ -1,3 +1,13 @@
+/**
+ * @file array_stats.h
+ * @brief Basic statistics for integer arrays (min, max, sum, mean).
+ *
+ * @author Eleftherios Tselegkidis
+ * @date 2025-03-31
+ *
+ * @warning For sorted arrays, prefer `array_sorted.h` for optimized O(1) versions.
+ */
+
 #ifndef ARRAY_STATS_H
 #define ARRAY_STATS_H
 
