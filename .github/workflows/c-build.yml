@@ -52,4 +52,10 @@ jobs:
           fi
 
       - name: Check include paths
-        run: make EXERCISE=${{ matrix.exercise }} check_includes || echo "Include check skipped"
+        run: |
+          if grep -r --include=\*.{c,h} "#include" . 1> /dev/null 2>&1; then
+            make EXERCISE=${{ matrix.exercise }} check_includes
+          else
+            echo "Include check skipped (no files found)"
+          fi
+      
