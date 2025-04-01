@@ -102,7 +102,7 @@ jobs:
       - name: Run manual test (if exists)
         run: |
           echo "Searching for manual test with pattern '${{ matrix.exercise }}_*_manual.c'"
-          find tests/manual -name "${{ matrix.exercise }}_*_manual.c"
+          find tests/manual -name "${{ matrix.exercise }}_test_*.c"
           FILE=$(find tests/manual -name "${{ matrix.exercise }}_*_manual.c" | head -n 1)
           echo "Found file: $FILE"
           if [ -f "$FILE" ]; then
