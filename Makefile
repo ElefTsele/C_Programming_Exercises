@@ -56,7 +56,7 @@ EXERCISE ?= 01
 
 # Mappings for EXERCISE number to module name
 ifeq ($(EXERCISE),01)
-EXERCISE_NAME := array_utils
+EXERCISE_NAME := array_stats
 else
 $(error Unknown EXERCISE number '$(EXERCISE)'. Add mapping in Makefile)
 endif

@@ -1,0 +1,73 @@
+\chapter{C Programming Exercises}
+\hypertarget{md__r_e_a_d_m_e}{}\label{md__r_e_a_d_m_e}\index{C Programming Exercises@{C Programming Exercises}}
+\label{md__r_e_a_d_m_e_autotoc_md0}%
+\Hypertarget{md__r_e_a_d_m_e_autotoc_md0}%
+ Practical C programming exercises, organized in a clean, modular structure with optional testing and professional coding practices.
+
+Based on the excellent "{}\+C Programming Examples"{} playlist by \href{https://www.youtube.com/@PortfolioCourses}{\texttt{ Portfolio Courses}}, this repository expands each example with\+:
+
+
+\begin{DoxyItemize}
+\item Modular C code ({\ttfamily .h} / {\ttfamily .c})
+\item Robust error handling and status enums
+\item Common macros (array size, clamp, swap, etc.)
+\item Unit testing setup using Unity
+\item Future CI/\+CD integration
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md2}{}\doxysection{\texorpdfstring{Attribution}{Attribution}}\label{md__r_e_a_d_m_e_autotoc_md2}
+\begin{quote}
+Original exercise logic and problem descriptions are derived from ~\newline
+ the \href{https://www.youtube.com/@PortfolioCourses}{\texttt{ Portfolio Courses}} You\+Tube channel. ~\newline
+ This repository restructures and extends those examples for modularity and educational use. \end{quote}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md3}{}\doxysection{\texorpdfstring{}{}}\label{md__r_e_a_d_m_e_autotoc_md3}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md4}{}\doxysection{\texorpdfstring{Project Structure}{Project Structure}}\label{md__r_e_a_d_m_e_autotoc_md4}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{C\_Programming\_Exercises/}
+\DoxyCodeLine{├──\ include/\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Header\ files\ (.h)}
+\DoxyCodeLine{├──\ src/\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Source\ files\ (.c)}
+\DoxyCodeLine{├──\ examples/\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Executable\ examples\ (each\ with\ its\ own\ \`{}main()`)}
+\DoxyCodeLine{├──\ tests/}
+\DoxyCodeLine{│\ \ \ ├──\ manual/\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Manual\ tests\ (no\ framework)}
+\DoxyCodeLine{│\ \ \ └──\ unity/\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Unit\ tests\ using\ Unity\ framework}
+\DoxyCodeLine{├──\ lib/}
+\DoxyCodeLine{│\ \ \ └──\ unity/\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Unity\ framework\ source}
+\DoxyCodeLine{├──\ bin/\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Output\ binaries}
+\DoxyCodeLine{├──\ Makefile\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Build\ system}
+\DoxyCodeLine{└──\ README.md}
+
+\end{DoxyCode}
+
+
+\DoxyHorRuler{0}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md6}{}\doxysection{\texorpdfstring{Build \& Run}{Build \& Run}}\label{md__r_e_a_d_m_e_autotoc_md6}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{make\ help\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Show\ available\ options}
+\DoxyCodeLine{make\ EXERCISE=01\ run\_example\ \ \ \ \ \ \ \ \ \#\ Run\ the\ example\ with\ main()}
+\DoxyCodeLine{make\ EXERCISE=01\ run\_manual\_test\ \ \ \ \ \#\ Run\ manual\ tests\ (without\ framework)}
+\DoxyCodeLine{make\ EXERCISE=01\ run\_unity\_test\ \ \ \ \ \ \#\ Run\ Unity\ tests\ (unit\ testing)}
+\DoxyCodeLine{make\ clean\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Clean\ build\ output\ (bin/)}
+\DoxyCodeLine{make\ LOG=1\ ...\ \ (enable\ debug\ logging))}
+
+\end{DoxyCode}
+
+
+\DoxyHorRuler{0}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md8}{}\doxysection{\texorpdfstring{Adding a New Exercise}{Adding a New Exercise}}\label{md__r_e_a_d_m_e_autotoc_md8}
+
+\begin{DoxyEnumerate}
+\item Create the appropriate files (.c and .h) with the correct names and folders.
+\item Add a mapping for the new exercise in the Makefile\+:
+\end{DoxyEnumerate}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{ifeq\ (\$(EXERCISE),02)}
+\DoxyCodeLine{EXERCISE\_NAME\ :=\ new\_module\_name}
+\DoxyCodeLine{endif}
+
+\end{DoxyCode}
+ 
