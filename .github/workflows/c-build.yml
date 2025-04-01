@@ -24,38 +24,40 @@ jobs:
       - name: Install dependencies
         run: sudo apt-get update && sudo apt-get install -y build-essential
 
-      # Example
-      - name: Build example (optional)
+      - name: Build example (if exists)
         run: |
-          if find examples -name "${{ matrix.exercise }}_*_example.c" | grep -q .; then
+          FILE=$(find examples -name "${{ matrix.exercise }}_*_example.c" | head -n 1)
+          echo "Found file: $FILE"
+          if [ -f "$FILE" ]; then
+            echo "Running example for EXERCISE=${{ matrix.exercise }}"
             make EXERCISE=${{ matrix.exercise }} run_example
           else
-            echo "Example not found. Skipping."
+            echo "No example file for EXERCISE=${{ matrix.exercise }} — Skipping."
           fi
 
-      # Manual test
-      - name: Run manual test (optional)
+      - name: Run manual test (if exists)
         run: |
-          if find tests/manual -name "${{ matrix.exercise }}_*_manual.c" | grep -q .; then
+          FILE=$(find tests/manual -name "${{ matrix.exercise }}_*_manual.c" | head -n 1)
+          echo "Found file: $FILE"
+          if [ -f "$FILE" ]; then
+            echo "Running manual test for EXERCISE=${{ matrix.exercise }}"
             make EXERCISE=${{ matrix.exercise }} run_manual_test
           else
-            echo "Manual test not found. Skipping."
+            echo "No manual test file for EXERCISE=${{ matrix.exercise }} — Skipping."
           fi
 
-      # Unity test
-      - name: Run Unity test (optional)
+      - name: Run Unity test (if exists)
         run: |
-          if find tests/unity -name "${{ matrix.exercise }}_*_unity.c" | grep -q .; then
+          FILE=$(find tests/unity -name "${{ matrix.exercise }}_*_unity.c" | head -n 1)
+          echo "Found file: $FILE"
+          if [ -f "$FILE" ]; then
+            echo "Running unity test for EXERCISE=${{ matrix.exercise }}"
             make EXERCISE=${{ matrix.exercise }} run_unity_test
           else
-            echo "Unity test not found. Skipping."
+            echo "No unity test file for EXERCISE=${{ matrix.exercise }} — Skipping."
           fi
 
       - name: Check include paths
         run: |
-          if grep -r --include=\*.{c,h} "#include" . 1> /dev/null 2>&1; then
-            make EXERCISE=${{ matrix.exercise }} check_includes
-          else
-            echo "Include check skipped (no files found)"
-          fi
+          make EXERCISE=${{ matrix.exercise }} check_includes || echo "Include check skipped"
       
