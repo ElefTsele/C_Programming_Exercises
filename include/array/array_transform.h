@@ -36,7 +36,7 @@ typedef enum
 // -----------------------------
 
 /*
-    array_clamp
+    array_clamp ok
     array_scale
     array_offset
     array_normalize
@@ -85,6 +85,39 @@ static inline array_status_t array_clamp(int* array, size_t size, const int min,
         {
             array[i] = max;
         }
+    }
+
+    return ARRAY_STATUS_OK;
+}
+
+/**
+ * @brief Scale each element of the array.
+ *
+ * Example:
+ *   Input:  {1, 2, 3, -4}, scale = 3 → Output: {3, 6, 9, -12}
+ *
+ * @param array The input/output array (in-place modification).
+ * @param size  The number of elements in the array.
+ * @param scale The scale factor.
+ *
+ * @retval ARRAY_STATUS_OK             Success.
+ * @retval ARRAY_STATUS_ERROR_NULL     Input pointer is NULL.
+ * @retval ARRAY_STATUS_ERROR_EMPTY    Array size is zero.
+ */
+static inline array_status_t array_scale(int* array, size_t size, const int scale)
+{
+    if (array == NULL)
+    {
+        return ARRAY_STATUS_ERROR_NULL;
+    }
+    if (size == 0U)
+    {
+        return ARRAY_STATUS_ERROR_EMPTY;
+    }
+
+    for (size_t i = 0; i < size; ++i)
+    {
+        array[i] = array[i] * scale;
     }
 
     return ARRAY_STATUS_OK;
