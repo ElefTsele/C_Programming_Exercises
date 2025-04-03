@@ -25,7 +25,7 @@ static void assert_arrays_equal(const int32_t* expected, const int32_t* actual, 
 }
 
 // ----------- array_clamp tests -----------
-void test_Clamp_valid_range(void)
+void test_array_transform_clamp_valid_range(void)
 {
     const array_status_t status = array_clamp(g_test_array, g_array_length, 3, 6);
     TEST_ASSERT_EQUAL_INT32(ARRAY_STATUS_OK, status);
@@ -34,34 +34,36 @@ void test_Clamp_valid_range(void)
     assert_arrays_equal(expected, g_test_array, g_array_length);
 }
 
-void test_Clamp_invalid_range_min_greater_than_max(void)
+void test_array_transform_clamp_invalid_range_min_greater_than_max(void)
 {
     const array_status_t status = array_clamp(g_test_array, g_array_length, 10, 2);
     TEST_ASSERT_EQUAL_INT32(ARRAY_STATUS_ERROR_INVALID_INPUT, status);
     assert_arrays_equal(g_original_array, g_test_array, g_array_length);
 }
 
-void test_Clamp_zero_size(void)
+void test_array_transform_clamp_zero_size(void)
 {
     const array_status_t status = array_clamp(g_test_array, 0U, 0, 10);
     TEST_ASSERT_EQUAL_INT32(ARRAY_STATUS_ERROR_EMPTY, status);
 }
 
-void test_Clamp_NULL_pointer(void)
+void test_array_transform_clamp_null_pointer(void)
 {
     const array_status_t status = array_clamp(NULL, g_array_length, 0, 5);
     TEST_ASSERT_EQUAL_INT32(ARRAY_STATUS_ERROR_NULL, status);
 }
+
+// ----------- array_scale tests -----------
 
 int main(void)
 {
     UNITY_BEGIN();
 
     // ----------- array_clamp tests -----------
-    RUN_TEST(test_Clamp_valid_range);
-    RUN_TEST(test_Clamp_invalid_range_min_greater_than_max);
-    RUN_TEST(test_Clamp_zero_size);
-    RUN_TEST(test_Clamp_NULL_pointer);
+    RUN_TEST(test_array_transform_clamp_valid_range);
+    RUN_TEST(test_array_transform_clamp_invalid_range_min_greater_than_max);
+    RUN_TEST(test_array_transform_clamp_zero_size);
+    RUN_TEST(test_array_transform_clamp_null_pointer);
 
     return UNITY_END();
 }
