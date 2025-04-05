@@ -53,12 +53,12 @@ void test_array_transform_clamp_null_pointer(void)
     TEST_ASSERT_EQUAL_INT32(ARRAY_STATUS_ERROR_NULL, status);
 }
 
-// ----------- array_scale_safe tests -----------
+// ----------- array_scale tests -----------
 
 void test_array_transform_scale_safe_no_overflow(void)
 {
     setUp();
-    const array_status_t status = array_scale_safe(g_test_array, g_array_length, 2, CLAMP_INT32);
+    const array_status_t status = array_scale(g_test_array, g_array_length, 2, CLAMP_INT32);
     TEST_ASSERT_EQUAL_INT32(ARRAY_STATUS_OK, status);
 
     const int32_t expected[] = {-16, -18, 24, 18, 2, 16, 10, 14, 6};
@@ -68,7 +68,7 @@ void test_array_transform_scale_safe_no_overflow(void)
 void test_array_transform_scale_safe_with_overflow(void)
 {
     /* Using a large scale to trigger overflow with INT8 clamp */
-    const array_status_t status = array_scale_safe(g_test_array, g_array_length, 100, CLAMP_INT8);
+    const array_status_t status = array_scale(g_test_array, g_array_length, 100, CLAMP_INT8);
     TEST_ASSERT_EQUAL_INT32(ARRAY_STATUS_WARNING_OVERFLOW_CLAMP, status);
 
     const int32_t expected[] = {-128, -128, 127, 127, 100, 127, 127, 127, 127};
@@ -77,14 +77,51 @@ void test_array_transform_scale_safe_with_overflow(void)
 
 void test_array_transform_scale_safe_zero_size(void)
 {
-    const array_status_t status = array_scale_safe(g_test_array, 0U, 10, CLAMP_INT32);
+    const array_status_t status = array_scale(g_test_array, 0U, 10, CLAMP_INT32);
     TEST_ASSERT_EQUAL_INT32(ARRAY_STATUS_ERROR_EMPTY, status);
 }
 
 void test_array_transform_scale_safe_null_pointer(void)
 {
-    const array_status_t status = array_scale_safe(NULL, g_array_length, 10, CLAMP_INT32);
+    const array_status_t status = array_scale(NULL, g_array_length, 10, CLAMP_INT32);
     TEST_ASSERT_EQUAL_INT32(ARRAY_STATUS_ERROR_NULL, status);
+}
+
+// ----------- array_offset_safe tests -----------
+
+void test_array_transform_offset_safe_signed(void)
+{
+    setUp();
+    const array_status_t status = array_offset(g_test_array, g_array_length, 3, CLAMP_INT8);
+    TEST_ASSERT_EQUAL_INT32(ARRAY_STATUS_WARNING_OVERFLOW_CLAMP, status);
+    const int32_t expected[] = {-105, -106, 115, 112, 4, 111, 108, 110, 106};
+    assert_arrays_equal(expected, g_test_array, g_array_length);
+}
+
+void test_array_transform_offset_safe_unsigned(void)
+{
+    uint32_t unsigned_array[] = {240, 250, 100, 0};
+    const size_t size = sizeof(unsigned_array) / sizeof(unsigned_array[0]);
+    const array_status_t status = array_offset_uint(unsigned_array, size, 20, CLAMP_UINT8);
+    TEST_ASSERT_EQUAL_INT32(ARRAY_STATUS_WARNING_OVERFLOW_CLAMP, status);
+    const uint32_t expected[] = {255, 255, 120, 20};
+    for (size_t i = 0; i < size; ++i)
+    {
+        TEST_ASSERT_EQUAL_UINT32(expected[i], unsigned_array[i]);
+    }
+}
+
+void test_array_transform_scale_unsigned_with_overflow(void)
+{
+    uint32_t unsigned_array[] = {100, 200, 300, 400};
+    const size_t size = sizeof(unsigned_array) / sizeof(unsigned_array[0]);
+    const array_status_t status = array_scale_uint(unsigned_array, size, 3, CLAMP_UINT8);
+    TEST_ASSERT_EQUAL_INT32(ARRAY_STATUS_WARNING_OVERFLOW_CLAMP, status);
+    const uint32_t expected[] = {300, 255, 255, 255};
+    for (size_t i = 0; i < size; ++i)
+    {
+        TEST_ASSERT_EQUAL_UINT32(expected[i], unsigned_array[i]);
+    }
 }
 
 int main(void)
@@ -102,6 +139,11 @@ int main(void)
     RUN_TEST(test_array_transform_scale_safe_with_overflow);
     RUN_TEST(test_array_transform_scale_safe_zero_size);
     RUN_TEST(test_array_transform_scale_safe_null_pointer);
+
+    // ----------- array_offset_safe tests -----------
+    RUN_TEST(test_array_transform_offset_safe_signed);
+    RUN_TEST(test_array_transform_offset_safe_unsigned);
+    RUN_TEST(test_array_transform_scale_unsigned_with_overflow);
 
     return UNITY_END();
 }
