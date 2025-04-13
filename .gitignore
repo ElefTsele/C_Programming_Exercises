@@ -26,9 +26,6 @@ cmake_install.cmake
 *~
 *.swp
 
-# Notes
-*.txt
-
 # Git internal
 FETCH_HEAD
 
@@ -36,3 +33,6 @@ FETCH_HEAD
 # will be uploaded only on release
 /docs/html/
 /docs/latex/
+
+# Personal files (notes and to-do list)
+personal/

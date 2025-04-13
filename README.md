@@ -2,21 +2,17 @@
 
 Practical C programming exercises, organized in a clean, modular structure with optional testing and professional coding practices.
 
-Based on the excellent "C Programming Examples" playlist by [Portfolio Courses](https://www.youtube.com/@PortfolioCourses), this repository expands each example with:
-
-- Modular C code (`.h` / `.c`)
-- Robust error handling and status enums
-- Common macros (array size, clamp, swap, etc.)
-- Unit testing setup using Unity
-- Future CI/CD integration
-
 ---
 
-## Attribution
+## Design Philosophy
 
-> Original exercise logic and problem descriptions are derived from  
-> the [Portfolio Courses](https://www.youtube.com/@PortfolioCourses) YouTube channel.  
-> This repository restructures and extends those examples for modularity and educational use.
+This project follows a professional, embedded-oriented coding style inspired by real-world practices:
+
+- Header-only libraries with `static inline` for maximum performance and inlining
+- Explicit `array_status_t` enums for robust and readable error handling
+- CI/CD support for testing each exercise automatically (GitHub Actions)
+- Modular folder structure: separates logic, examples, and tests clearly
+- No external dependencies except Unity (for unit testing)
 
 ---
 
@@ -24,57 +20,67 @@ Based on the excellent "C Programming Examples" playlist by [Portfolio Courses](
 
 ```
 C_Programming_Exercises/
-├── include/                   # Header files (.h)
-├── src/                       # Source files (.c)
-├── examples/                  # Executable examples (each with its own `main()`)
-├── tests/
-│   ├── manual/                # Manual tests (no framework)
-│   └── unity/                 # Unit tests using Unity framework
-├── lib/
-│   └── unity/                 # Unity framework source
-├── bin/                       # Output binaries
-├── Makefile                   # Build system
+├── build/                   # CMake build output
+│   └── bin/                 # Output binaries (executables)
+├── examples/                # Executable examples (main.c)
+├── include/array/           # Modular header-only libraries
+├── lib/unity/               # Unity framework source
+├── tests/                   # Unit tests (per module, per function)
+├── .github/workflows/       # GitHub Actions CI configuration
+├── .gitignore               # Ignore build/output/temp files
+├── CMakeLists.txt           # CMake build configuration
+├── Doxyfile                 # Doxygen configuration
 └── README.md
 ```
 
 ---
 
-## Build & Run
+## Build Instructions
 
-```sh
-make help                                # Show available options
-make EXERCISE=01 run_example             # Run the example with main()
-make EXERCISE=01 run_manual_test         # Run manual tests (without framework)
-make EXERCISE=01 run_unity_test          # Run Unity tests (with Unity framework)
-make clean                               # Clean build output (bin/)
-make LOG=1 EXERCISE=01 run_example       # Enable debug logging (if supported)
-make check_includes                      # Show all include paths used in the code
+> Requires CMake 3.16+ and a C compiler (GCC, Clang, MinGW, etc.)
+
+```bash
+# Generate build system
+cmake -B build
+
+# Build all available targets
+cmake --build build
+
 ```
 
 ---
 
-## Adding a New Exercise
 
-1. Create the appropriate files (.c and .h) with the correct names and folders.
-2. Add a mapping for the new exercise in the Makefile:
+## Executables & Naming
 
-```sh
-ifeq ($(EXERCISE),02)
-EXERCISE_NAME := new_module_name
-endif
-```
+| Target               | Description                         |
+|----------------------|-------------------------------------|
+| `example_01`         | Run main example from exercise 01   |
+| `unity_01_stats`     | Run Unity tests for stats module    |
+| `unity_02_clamp`     | Run Unity tests for clamp function  |
+| `unity_02_scale`     | Run Unity tests for scale function  |
+| ...                  | Auto-generated based on file names  |
+
+Each Unity test file (`clamp.c`, `scale.c`, etc.) is built independently.  
+Tests follow the Unity style and can override `setUp()` / `tearDown()` as needed.
+
+---
 
 # Array Utilities
 
 This directory contains modular, header-only libraries for common array operations,
 designed for embedded systems and high-performance applications.
 
-## Modules
+## Modules Overview
 
-- `array_stats.h` – Basic statistics: sum, mean, min, max
-- `array_transform.h` – Value transformations: clamp, scale, normalize
-- `array_sorted.h` – Optimized operations for sorted arrays (e.g. min/max in O(1))
-- `array_noise.h` – Filtering functions (median, average excluding extremes, etc.)
+| Header              | Purpose                                        |
+|---------------------|------------------------------------------------|
+| `array_stats.h`     | Min, max, sum, mean                            |
+| `array_transform.h` | Clamp, normalize, offset, scale                |
+| `array_sorted.h`    | Optimized access when array is sorted (O(1))   |
+| `array_noise.h`     | Median, trimmed mean, noise reduction          |
+
+All functions are `static inline`, zero-overhead, and portable.
 
 ---
 
@@ -88,5 +94,14 @@ However, when the array is guaranteed to be sorted, significant optimizations ca
 - `array_max_sorted()` → returns `array[size - 1]`
 - `array_median_sorted()` → direct access to the middle element
 
-**These optimizations can reduce complexity from O(n) to O(1).**
+These optimizations can reduce complexity from O(n) to O(1).
 
+## Coming Soon
+
+- [ ] `ctest` integration to run all Unity tests with one command
+- [ ] `Doxygen` support for clean documentation
+- [ ] Example validation with `valgrind` (memory checks)
+- [ ] Code coverage reports (gcov/gcovr)
+
+
+© 2025 - Maintained by Eleftherios Tselegkidis

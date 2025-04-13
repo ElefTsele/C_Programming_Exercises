@@ -1,14 +1,7 @@
 #include "array/array_stats.h"
 #include "unity.h"
 
-// Optional setup function (before each test).
-void setUp(void) {}
-
-// Optional teardown function (after each test).
-void tearDown(void) {}
-
 // ----------- array_min/max tests -----------
-
 void test_array_min_should_return_min(void)
 {
     int array[] = {5, 2, 9, 3};
@@ -38,7 +31,7 @@ void test_array_min_should_return_error_on_null_pointer(void)
 
 void test_array_max_should_return_error_on_empty_array(void)
 {
-    int array[] = {};
+    int array[] = {0};
     int result = 0;
     array_status_t status = array_max(array, 0, &result);
     TEST_ASSERT_EQUAL(ARRAY_STATUS_ERROR_EMPTY, status);
@@ -69,7 +62,7 @@ void test_array_sum_should_return_error_on_null_output_pointer(void)
 
 void test_array_sum_should_return_error_on_empty_array(void)
 {
-    int array[] = {};
+    int array[] = {0};
     int result = 0;
     array_status_t status = array_sum(array, 0, &result);
     TEST_ASSERT_EQUAL(ARRAY_STATUS_ERROR_EMPTY, status);
@@ -85,7 +78,6 @@ void test_array_sum_should_handle_negative_numbers(void)
 }
 
 // ----------- array_mean tests -----------
-
 void test_array_mean_should_return_correct_mean(void)
 {
     int array[] = {4, 6, 8, 2}; // sum = 20, mean = 5
@@ -111,7 +103,7 @@ void test_array_mean_should_return_error_on_null_output_pointer(void)
 
 void test_array_mean_should_return_error_on_zero_size(void)
 {
-    int array[] = {};
+    int array[] = {0};
     int result = 0;
     array_status_t status = array_mean(array, 0, &result);
     TEST_ASSERT_EQUAL(ARRAY_STATUS_ERROR_EMPTY, status);
