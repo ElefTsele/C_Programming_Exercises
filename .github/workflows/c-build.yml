@@ -134,3 +134,4 @@ jobs:
       - name: Check include paths
         run: |
           make EXERCISE=${{ matrix.exercise }} check_includes || echo "Include check skipped"
+
