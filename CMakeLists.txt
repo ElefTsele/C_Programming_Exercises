@@ -23,18 +23,6 @@ include_directories(
 )
 
 # ============================================================
-# Enable CTest support and register Unity tests
-# ============================================================
-enable_testing()
-
-file(GLOB_RECURSE UNITY_BINARIES "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/unity_*")
-
-foreach(test_exec ${UNITY_BINARIES})
-    get_filename_component(test_name ${test_exec} NAME_WE)
-    add_test(NAME ${test_name} COMMAND ${test_exec})
-endforeach()
-
-# ============================================================
 # Global Compiler Options
 # -Wall     : Enable all common warnings
 # -Wextra   : Extra useful warnings
@@ -68,21 +56,25 @@ endforeach()
 file(GLOB_RECURSE UNITY_TEST_FILES "tests/*/*.c")
 
 foreach(TEST_FILE ${UNITY_TEST_FILES})
-    get_filename_component(TEST_NAME ${TEST_FILE} NAME_WE)               # clamp
-    get_filename_component(TEST_DIR ${TEST_FILE} DIRECTORY)              # tests/02_array_transform
+    get_filename_component(TEST_NAME ${TEST_FILE} NAME_WE)              # clamp
+    get_filename_component(TEST_DIR ${TEST_FILE} DIRECTORY)             # tests/02_array_transform
     get_filename_component(EXERCISE_FOLDER ${TEST_DIR} NAME)            # 02_array_transform
     string(REGEX MATCH "^[0-9]+" EXERCISE_NUM ${EXERCISE_FOLDER})       # 02
 
-    add_executable(unity_${EXERCISE_NUM}_${TEST_NAME}
+    set(TARGET_NAME unity_${EXERCISE_NUM}_${TEST_NAME})
+
+    add_executable(${TARGET_NAME}
         ${TEST_FILE}
         lib/unity/unity.c
     )
 
     add_test(
-      NAME unity_${EXERCISE_NUM}_${TEST_NAME}
-      COMMAND ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/unity_${EXERCISE_NUM}_${TEST_NAME}
-  )
+        NAME ${TARGET_NAME}
+        COMMAND ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${TARGET_NAME}
+    )
 endforeach()
+
+enable_testing()
 
 message("
 # ============================================================
