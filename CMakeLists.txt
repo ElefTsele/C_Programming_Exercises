@@ -6,8 +6,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(C_Programming_Exercises C)
 
-# Set output directory for all built binaries (executables)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
 
 set(
     CMAKE_C_STANDARD 99
@@ -15,10 +14,25 @@ set(
     CMAKE_C_EXTENSIONS NO
 )
 
+# Set output directory for all built binaries (executables)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
 include_directories(
     include
     lib/unity
 )
+
+# ============================================================
+# Enable CTest support and register Unity tests
+# ============================================================
+enable_testing()
+
+file(GLOB_RECURSE UNITY_BINARIES "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/unity_*")
+
+foreach(test_exec ${UNITY_BINARIES})
+    get_filename_component(test_name ${test_exec} NAME_WE)
+    add_test(NAME ${test_name} COMMAND ${test_exec})
+endforeach()
 
 # ============================================================
 # Global Compiler Options
@@ -63,6 +77,11 @@ foreach(TEST_FILE ${UNITY_TEST_FILES})
         ${TEST_FILE}
         lib/unity/unity.c
     )
+
+    add_test(
+      NAME unity_${EXERCISE_NUM}_${TEST_NAME}
+      COMMAND ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/unity_${EXERCISE_NUM}_${TEST_NAME}
+  )
 endforeach()
 
 message("

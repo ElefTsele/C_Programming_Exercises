@@ -25,13 +25,7 @@ jobs:
       - name: Build project
         run: cmake --build build
 
-      # Optional: Run tests (we'll add CTest support soon)
-      - name: Run Unity tests (if any)
+      - name: Run CTest (Unity Tests)
         run: |
-          echo "=== Executables ==="
-          find build/bin -type f -executable
-          echo "=== Running tests ==="
-          for f in build/bin/unity_*; do
-            echo "Running $f"
-            $f
-          done
+          cd build
+          ctest --output-on-failure
