@@ -90,9 +90,9 @@ Run Unity Test: (cd build/bin/)
   unity_02_clamp 
   unity_02_scale
 
-Run CTEST: (cd build)
+Run CTest: (cd build)
   ctest
-  
+
 Build:
   cmake -B build
   cmake --build build
