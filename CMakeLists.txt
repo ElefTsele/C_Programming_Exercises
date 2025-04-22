@@ -81,18 +81,18 @@ message("
 Project C_Programming_Exercises
 Available targets:
   
-Run Examples: (cd build/bin/)
+Run Examples: (cd build/bin/, e.g. ./example_01)
   example_01
   example_02
 
-Run Unity Test: (cd build/bin/)
+Run Unity Test: (cd build/bin/, e.g. ./unity_01_stats)
   unity_01_stats
   unity_02_clamp 
   unity_02_scale
 
 Run CTest: (cd build)
   ctest
-
+  
 Build:
   cmake -B build
   cmake --build build
